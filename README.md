@@ -42,9 +42,9 @@ We use the dataset 4K PBMC from a Healthy Donor (https://support.10xgenomics.com
 python scCAEs.py --data_type 10X
 ```
 
-Then you will get the cluster result of “PBMC”dataset using scCAEs method . The values of NMI, ARI and Accuracy are 0.8110, 0.8246 and 0.8763, respectively. 
+Then you will get the cluster result of "PBMC" dataset using scCAEs method. The values of NMI, ARI and Accuracy are 0.8110, 0.8246 and 0.8763, respectively. 
 
-### Other Dateset
+### Other Datesets
 
 If you want to run other 10X type datasets, you can put your 10X type dataset files and cell label file into "/datasets/10X". In other words. "/Datasets/10X" should contain three 10X type files "barcodes.tsv", "genes.tsv", "matrix.mtx" and a cell label file "label.csv".
 
@@ -60,6 +60,12 @@ If you want to run other types of datasets, you should first generate two files 
 python scCAEs.py --dataset folder_name
 ```
 
-fold_name represents the name of your dataset folder.
+fold_name represents the name of your dataset folder. We use the Zeisel dataset as an example. You can download the data at https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60361. Then you can generate the gene expression matrix file "data.csv" and the cell label file "label.csv" and put them in the folder "/datasets/Zeisel". Finally you can run the following code. 
+
+```bash
+python scCAEs.py --dataset Zeisel
+```
+Then you will get the cluster result of "Zeisel" dataset using scCAEs method. The values of NMI, ARI and Accuracy are 0.7636, 0.8107 and 0.8932, respectively. 
+
 
 

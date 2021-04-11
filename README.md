@@ -2,7 +2,7 @@
 ScCAEs first learned the nonlinear mapping from original scRNA-seq to low-dimensional features through a convolutional autoencoder, and then iteratively completed cell clustering through the regularized soft Kmeans algorithm with KL divergence. 
 
 ## Architecture
-![model](https://github.com/gushenweiz/scCAEs/blob/main/Architecture/model.png)
+![model](https://github.com/gushenweiz/scCAEs/blob/master/Architecture/model.png)
 ## Install
 
 To use scCAEs you must make sure that your python version is greater than 3.6.

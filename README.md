@@ -60,7 +60,7 @@ If you want to run other types of datasets, you should first generate two files 
 python scCAEs.py --dataset folder_name
 ```
 
-fold_name represents the name of your dataset folder. We use the Zeisel dataset as an example. You can download the data at https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60361. Then you can generate the gene expression matrix file "data.csv" and the cell label file "label.csv" and put them in the folder "/datasets/Zeisel". Finally you can run the following code. 
+The fold_name represents the name of your dataset folder. We use the Zeisel dataset as an example. You can download the data at https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60361. Then you can generate the gene expression matrix file "data.csv" and the cell label file "label.csv" and put them in the folder "/datasets/Zeisel". Finally you can run the following code. 
 
 ```bash
 python scCAEs.py --dataset Zeisel

@@ -68,5 +68,7 @@ python scCAEs.py --dataset Zeisel
 ```
 Then you will get the cluster result of "Zeisel" dataset using scCAEs method. The values of NMI, ARI and Accuracy are 0.7636, 0.8107 and 0.8932, respectively. 
 
-
+## Plots
+We show an example on how to create a tSNE plot with the predicted cell types. The R command can be found in the "tSNE_Example" folder.
+![tSNE Plot](https://github.com/gushenweiz/scCAEs/blob/master/tSNE_Example/tSNE_Plot.png)
 

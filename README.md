@@ -70,5 +70,5 @@ Then you will get the cluster result of "Zeisel" dataset using scCAEs method. Th
 
 ## Plots
 We show an example on how to create a tSNE plot with the predicted cell types. The R command can be found in the "tSNE_Example" folder.
-![tSNE Plot](https://github.com/gushenweiz/scCAEs/blob/master/tSNE_Example/tSNE_Plot.png)
+![tSNE Plot](https://github.com/gushenweiz/scCAEs/blob/master/tSNE_Example/tSNE_Zeisel.png)
 

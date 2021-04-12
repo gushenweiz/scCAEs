@@ -43,7 +43,9 @@ We use the dataset 4K PBMC from a Healthy Donor (download [here](https://support
 python scCAEs.py --data_type 10X
 ```
 
-Then you will get the cluster result of "PBMC" dataset using scCAEs method. The values of NMI, ARI and Accuracy are 0.8110, 0.8246 and 0.8763, respectively. 
+Then you will get the cluster result of "PBMC" dataset using scCAEs method. The final output reports the clustering performance, here is an example on 10X PBMC scRNA-seq data:
+Final: NMI= 0.8810, ARI= 0.8246, ACC= 0.8763.
+In addition, you will also get an output file named "predict_dataset.csv". In the file, the first column will be the cell name, the second column will be the predicted cell type. 
 
 ### Other Datesets
 

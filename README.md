@@ -37,7 +37,7 @@ pip install --editable .
 
 ## Usage
 ### Quick start
-We use the dataset 4K PBMC from a Healthy Donor (Download dataset [here](https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc4k)) to illustrate an example. You just run the following code:
+We use the dataset 4K PBMC from a Healthy Donor (download [here](https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc4k)) to illustrate an example. You just run the following code:
 
 ```bash
 python scCAEs.py --data_type 10X
@@ -61,7 +61,7 @@ If you want to run other types of datasets, you should first generate two files 
 python scCAEs.py --dataset folder_name
 ```
 
-The fold_name represents the name of your dataset folder. We use the Zeisel (Download dataset [here](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60361)) dataset as an example. Then you can generate the gene expression matrix file "data.csv" and the cell label file "label.csv" and put them in the folder "/datasets/Zeisel". Finally you can run the following code:
+The fold_name represents the name of your dataset folder. We use the Zeisel (download [here](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60361)) dataset as an example. Then you can generate the gene expression matrix file "data.csv" and the cell label file "label.csv", and put them in the folder "/datasets/Zeisel". Finally you can run the following code:
 
 ```bash
 python scCAEs.py --dataset Zeisel

@@ -78,5 +78,5 @@ In addition, you will also get an output file named "predict_Zeisel.csv". In the
 
 ## Plots
 We show an example on how to create a tSNE plot with the predicted cell types and true cell types. In the following two images, the first image is colored with clustering results, and the second image is colored with true labels. The R command can be found in the "tSNE_Example" folder.<br>
-![Zeisel_clusters](https://github.com/gushenweiz/scCAEs/blob/master/tSNE_Example/Zeisel_cluster.png)![Zeisel_truelabel](https://github.com/gushenweiz/scCAEs/blob/master/tSNE_Example/Zeisel_truelabel.png)
+![Zeisel_clusters](https://github.com/gushenweiz/scCAEs/blob/master/tSNE_Example/Zeisel_clusters.png)![Zeisel_truelabel](https://github.com/gushenweiz/scCAEs/blob/master/tSNE_Example/Zeisel_truelabel.png)
 

@@ -47,7 +47,7 @@ Then you will get the cluster result of "PBMC" dataset using scCAEs method. The 
 
 Final: NMI= 0.8810, ARI= 0.8246, ACC= 0.8763.
 
-In addition, you will also get an output file named "cluster_PBMC.csv". In the file, the first column will be the cell name, the second column will be the predicted cell type. 
+In addition, you will also get an output file named "cluster_PBMC.csv". In the file, the first column will be the cell name, the second column will be the clustering result. 
 
 ### Other Datesets
 
@@ -74,7 +74,7 @@ Then you will get the cluster result of "Zeisel" dataset using scCAEs method. Th
 
 Final: NMI= 0.7636, ARI= 0.8107, ACC= 0.8932.
 
-In addition, you will also get an output file named "cluster_Zeisel.csv". In the file, the first column will be the cell name, the second column will be the predicted cell type. 
+In addition, you will also get an output file named "cluster_Zeisel.csv". In the file, the first column will be the cell name, the second column will be the clustering result. 
 
 ## Plots
 We show an example on how to create a tSNE plot with the predicted cell types and true cell types. In the following two images, the first image is colored with clustering results, and the second image is colored with true labels. The R command can be found in the "tSNE_Example" folder.<br>

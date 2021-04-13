@@ -72,7 +72,7 @@ python scCAEs.py --dataset Zeisel
 ```
 Then you will get the cluster result of "Zeisel" dataset using scCAEs method. The final output reports the clustering performance, here is an example on Zeisel dataset:
 
-Final: NMI= 0.7636, ARI= 0.8107, ACC= 0.8932.
+Final: NMI= 0.7483, ARI= 0.8057, ACC= 0.8895.
 
 In addition, you will also get an output file named "cluster_Zeisel.csv". In the file, the first column will be the cell name, the second column will be the clustering result. 
 

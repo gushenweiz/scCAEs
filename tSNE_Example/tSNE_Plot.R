@@ -11,7 +11,7 @@ ze <- RunTSNE(ze, dims = 1:10)
 tsne<-ze@reductions[["tsne"]]@cell.embeddings
 tsnepc1 =data.frame(var_x=tsne[,1],var_y=tsne[,2])
 
-class.label<- read.table("predict_Zeisel.csv", header=T,sep=",",check.names=F) 
+class.label<- read.table("cluster_Zeisel.csv", header=T,sep=",",check.names=F) 
 class.label<-as.matrix(class.label)
 class.label<- class.label[,2]
 cluster=class.label

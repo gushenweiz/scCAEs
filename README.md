@@ -77,6 +77,6 @@ Final: NMI= 0.7636, ARI= 0.8107, ACC= 0.8932.
 In addition, you will also get an output file named "predict_Zeisel.csv". In the file, the first column will be the cell name, the second column will be the predicted cell type. 
 
 ## Plots
-We show an example on how to create a tSNE plot with the predicted cell types. The R command can be found in the "tSNE_Example" folder.
+We show an example on how to create a tSNE plot with the predicted cell types. The R command can be found in the "tSNE_Example" folder.<br>
 ![Zeisel_cluster](https://github.com/gushenweiz/scCAEs/blob/master/tSNE_Example/Zeisel_cluster.png)![Zeisel_truelabel](https://github.com/gushenweiz/scCAEs/blob/master/tSNE_Example/Zeisel_truelabel.png)
 

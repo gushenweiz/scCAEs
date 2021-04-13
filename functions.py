@@ -893,6 +893,11 @@ def train_soft_k_means(dataset, X, y, input_var, decoder, encoder, loss_recons, 
     y_pred = np.argmax(y_prob, axis=1)
 
     clus_end = time.time()
+    
+    y_pred_dataframe = pd.DataFrame(y_pred)
+    y_pred_dataframe.columns = ['cluster']
+    dfname = 'cluster_' + dataset + '.csv'
+    y_pred_dataframe.to_csv(dfname)
 
     print('final: ',
           '\t nmi = {:.4f}  '.format(normalized_mutual_info_score(y, y_pred)),

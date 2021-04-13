@@ -40,14 +40,14 @@ pip install --editable .
 We use the dataset 4K PBMC from a Healthy Donor (download [here](https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc4k)) to illustrate an example. You just run the following code:
 
 ```bash
-python scCAEs.py --data_type 10X
+python scCAEs.py --data_type 10X --dataset PBMC
 ```
 
 Then you will get the cluster result of "PBMC" dataset using scCAEs method. The final output reports the clustering performance, here is an example on 10X PBMC scRNA-seq data:
 
 Final: NMI= 0.8810, ARI= 0.8246, ACC= 0.8763.
 
-In addition, you will also get an output file named "predict_dataset.csv". In the file, the first column will be the cell name, the second column will be the predicted cell type. 
+In addition, you will also get an output file named "predict_PBMC.csv". In the file, the first column will be the cell name, the second column will be the predicted cell type. 
 
 ### Other Datesets
 
@@ -56,7 +56,7 @@ If you want to run other 10X type datasets, you can put your 10X type dataset fi
 Then you can run the following code:
 
 ```bash
-python scCAEs.py --data_type 10X
+python scCAEs.py --data_type 10X --dataset PBMC
 ```
 
 If you want to run other types of datasets, you should first generate two files "data.csv" (gene count matrix, where rows represent cells and columns represent genes) and "label.csv" (true label). Then you can put your dataset folder containing the above two files ("data.csv" and "label.csv") into "datasets" and run the following code: 
@@ -70,7 +70,11 @@ The fold_name represents the name of your dataset folder. We use the Zeisel (dow
 ```bash
 python scCAEs.py --dataset Zeisel
 ```
-Then you will get the cluster result of "Zeisel" dataset using scCAEs method. The values of NMI, ARI and Accuracy are 0.7636, 0.8107 and 0.8932, respectively. 
+Then you will get the cluster result of "Zeisel" dataset using scCAEs method. The final output reports the clustering performance, here is an example on Zeisel dataset:
+
+Final: NMI= 0.7636, ARI= 0.8107, ACC= 0.8932.
+
+In addition, you will also get an output file named "predict_Zeisel.csv". In the file, the first column will be the cell name, the second column will be the predicted cell type. 
 
 ## Plots
 We show an example on how to create a tSNE plot with the predicted cell types. The R command can be found in the "tSNE_Example" folder.

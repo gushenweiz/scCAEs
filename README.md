@@ -78,5 +78,5 @@ In addition, you will also get an output file named "predict_Zeisel.csv". In the
 
 ## Plots
 We show an example on how to create a tSNE plot with the predicted cell types. The R command can be found in the "tSNE_Example" folder.
-![tSNE Plot](https://github.com/gushenweiz/scCAEs/blob/master/tSNE_Example/tSNE_Zeisel.png)
+![Zeisel_cluster](https://github.com/gushenweiz/scCAEs/blob/master/tSNE_Example/Zeisel_cluster.png)![Zeisel_truelabel](https://github.com/gushenweiz/scCAEs/blob/master/tSNE_Example/Zeisel_truelabel.png)
 

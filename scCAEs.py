@@ -66,14 +66,14 @@ verbose = args.verbose
 regularization_hyperparam = args.regularization_hyperparam
 initialization_is_done = args.initialization_is_done
 do_soft_k_means = args.do_soft_k_means
-
+highly_genes = args.highly_genes
 
 ############################## Load Data And Preprocessing ##############################
 
 data, y = read_data(filename=args.dataset, data_type=data_type)
 data = np.array(data).astype('float32')
 y = np.array(y)
-X, y = preprocessing(data, y, highly_genes=args.highly_genes)
+X, y = preprocessing(data, y, highly_genes=1601)
 print(X.shape)
 print(y.shape)
 
@@ -104,7 +104,7 @@ if initialization_is_done == False:
     print("\n...Start AutoEncoder training...")
     initial_time = timeit.default_timer()
 
-    train_depict_ae(dataset, X, y, input_var, decoder, encoder, loss_recons, loss_recons_clean, num_clusters, output_path,
+train_depict_ae(dataset, X, y, input_var, decoder, encoder, loss_recons, loss_recons_clean, num_clusters, output_path,
                     batch_size=100, test_batch_size=100, num_epochs=4000, learning_rate=1e-4,
                     verbose=verbose, seed=seed, continue_training=args.continue_training)
 
@@ -117,8 +117,8 @@ y_pred, centroids = clustering(dataset, X, y, input_var, encoder, decoder, num_c
 if do_soft_k_means == True:
     ############################## Train soft_K_means Model  ##############################
     train_soft_k_means(dataset, X, y, input_var, decoder, encoder, loss_recons,loss_recons_clean, loss3, num_clusters, output_path,
-        batch_size=100, test_batch_size=100, num_epochs=100,
-        learning_rate=1e-3, rec_mult=reconstruct_hyperparam, clus_mult=cluster_hyperparam,
-        reg_lambda=regularization_hyperparam, centroids=centroids,  continue_training=args.continue_training, seed=seed)
+                 batch_size=100, test_batch_size=100, num_epochs=500,
+                 learning_rate=1e-3, rec_mult=reconstruct_hyperparam, clus_mult=cluster_hyperparam,
+                 reg_lambda=regularization_hyperparam,centroids = centroids, continue_training=args.continue_training)
 
 

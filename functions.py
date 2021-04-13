@@ -55,8 +55,8 @@ def read_data(filename, data_type):
         data_path = "./datasets/" + filename + "/data.csv"
         label_path = "./datasets/" + filename + "/label.csv"
         X = pd.read_csv(data_path, header=0, index_col=0, sep=',')
-        y = pd.read_csv(label_path, index_col=0, header=0)
-    return X,y
+        y = pd.read_csv(label_path, index_col=0, header=0,sep = ',')
+    return X, y
 
 
 def reshapeX(data):
@@ -484,7 +484,7 @@ def clustering(dataset, X, y, input_var, encoder, decoder, num_clusters, output_
 
     encoder_clean = lasagne.layers.get_output(encoder, deterministic=True)
     encoder_clean_function = theano.function([input_var], encoder_clean)
-    
+
     if os.path.isfile(os.path.join(output_path, '../params/params_' + dataset + '_values_best.pickle')):
         with open(os.path.join(output_path, '../params/params_' + dataset + '_values_best.pickle'),
                   "rb") as input_file:
@@ -522,21 +522,21 @@ def clustering(dataset, X, y, input_var, encoder, decoder, num_clusters, output_
 
 def train_soft_k_means(dataset, X, y, input_var, decoder, encoder, loss_recons, loss_recons_clean, loss3,  num_clusters, output_path,
                  batch_size=100, test_batch_size=100, num_epochs=1000, learning_rate=1e-4, prediction_status='soft',
-                 rec_mult=1, clus_mult=1, reg_lambda=1, init_flag=1,centroids=None, continue_training=False, seed=42):
+                 rec_mult=1, clus_mult=1, reg_lambda=1, init_flag=1, continue_training=False,centroids = None):
     ######################
     #   ADD RLC TO MdA   #
     ######################
     
     initial_time = timeit.default_timer()
     # import y_pred and centroids for initialization
-        
+
     if os.path.isfile(os.path.join(output_path, '../params/pred' + dataset + '.pickle')):
-            with open(os.path.join(output_path, '../params/pred' + dataset + '.pickle'),
-                      "rb") as input_file:
-                y_pred = pickle.load(input_file, encoding='latin1')
+        with open(os.path.join(output_path, '../params/pred' + dataset + '.pickle'),
+                  "rb") as input_file:
+            y_pred = pickle.load(input_file, encoding='latin1')
     else:
         sys.exit("Initialization: y_pred are not available")
-        
+
     if os.path.isfile(os.path.join(output_path, '../params/params_' + dataset + '_values_best.pickle')):
         with open(os.path.join(output_path, '../params/params_' + dataset + '_values_best.pickle'),
                   "rb") as input_file:
@@ -544,12 +544,11 @@ def train_soft_k_means(dataset, X, y, input_var, decoder, encoder, loss_recons, 
             lasagne.layers.set_all_param_values(decoder, best_params)
     else:
         sys.exit("Initialization: best_params are not available")
-    
+
     rec_lambda = theano.shared(lasagne.utils.floatX(rec_mult))
     clus_lambda = theano.shared(lasagne.utils.floatX(clus_mult))
     pred_normalizition_flag = 1
     num_batches = X.shape[0] // batch_size
-
     if prediction_status == 'soft':
         target_var = T.matrix('minibatch_out')
         target_var_init = T.matrix('minibatch_out_init')
@@ -560,28 +559,23 @@ def train_soft_k_means(dataset, X, y, input_var, decoder, encoder, loss_recons, 
     elif prediction_status == 'hard':
         target_var = T.ivector('minibatch_out')
         target_val = T.vector()
-    
-    
+
     reg_lambda_T = theano.shared(lasagne.utils.floatX(reg_lambda))
     num_clusters_T = theano.shared(lasagne.utils.floatX(num_clusters))
     encoder_clean = lasagne.layers.get_output(encoder, deterministic=True)
     encoder_noisy = lasagne.layers.get_output(encoder, deterministic=False)
     encoder_clean_function = theano.function([input_var], encoder_clean)
     loss3 = - normV(encoder_noisy)
-    
+
     norm_opt_init = normMatrixT2(z_var, theta_init)
     Function_Q_init = theano.function([z_var, theta_init], norm_opt_init)
     # For training
-
-    ####################KL########################
     network2 = build_eml(encoder, n_out=num_clusters, W_initial=centroids)
     network_prediction_noisy = lasagne.layers.get_output(network2, input_var, deterministic=False)
     network_prediction_clean = lasagne.layers.get_output(network2, input_var, deterministic=True)
     loss_KL = lasagne.objectives.categorical_crossentropy(network_prediction_noisy,
                                                           target_var)
     loss_KL = loss_KL.mean() * 0.1
-    #################################################
-
     prediction_t = normMatrixT2(encoder_noisy, theta_var)
     loss_clus_soft = weightedquaredloss(prediction_t, target_var).mean()
     loss_soft = loss_recons * (reg_lambda_T) + loss3.mean() + loss_clus_soft - loss_KL
@@ -601,16 +595,12 @@ def train_soft_k_means(dataset, X, y, input_var, decoder, encoder, loss_recons, 
     Function_Q = theano.function([z_var, q_var], norm_opt)
 
     # For initialization
-    ####################KL########################
-
     loss_KL_init = lasagne.objectives.categorical_crossentropy(network_prediction_noisy,
                                                                target_var_init)
     loss_KL_init = loss_KL_init.mean() * 0.1
-    #################################################
     prediction_t_init = normMatrixT2(encoder_noisy, theta_init)
     loss_clus_soft_init = weightedquaredloss(prediction_t_init, target_var_init).mean()
     loss_soft_init = loss_recons * (reg_lambda_T) + loss3.mean() + loss_clus_soft_init - loss_KL_init
-
 
     params_soft_init = lasagne.layers.get_all_params(decoder, trainable=True)
     updates_soft_init = lasagne.updates.adam(loss_soft_init, params_soft_init, learning_rate=learning_rate)
@@ -630,21 +620,20 @@ def train_soft_k_means(dataset, X, y, input_var, decoder, encoder, loss_recons, 
         else:
             y_pred = y_pred.astype(int)
             X_train, X_val, y_train, y_val, y_pred_train, y_pred_val = train_test_split(
-                X, y, y_pred , stratify=y, test_size=0.10, random_state=42)
+                X, y, y_pred, stratify=y, test_size=0.10, random_state=42)
             last_update = 0
             # Initilization
             ind_y = np.copy(y_pred)
             y_targ = np.zeros((ind_y.shape[0], num_clusters))
-            y_targ[np.arange(ind_y.shape[0]),ind_y]=1
-            
+            y_targ[np.arange(ind_y.shape[0]), ind_y] = 1
+
             ind_y_train = np.copy(y_pred_train)
             y_targ_train = np.zeros((ind_y_train.shape[0], num_clusters))
-            y_targ_train[np.arange(ind_y_train.shape[0]),ind_y_train]=1
+            y_targ_train[np.arange(ind_y_train.shape[0]), ind_y_train] = 1
             # y_targ_train = np.copy(y_pred_train)
             y_targ_val = np.copy(y_pred_val)
-            
-            minibatch_flag = 1
 
+            minibatch_flag = 1
             for batch in iterate_minibatches(X, y, test_batch_size, shuffle=False):
                 inputs, targets, idx = batch
                 minibatch_x = encoder_clean_function(inputs)
@@ -654,66 +643,66 @@ def train_soft_k_means(dataset, X, y, input_var, decoder, encoder, loss_recons, 
                 else:
                     features_L = np.concatenate((features_L, minibatch_x), axis=0)
                 # Theta K
+            centroids = Function_theta(np.ndarray.astype(y_targ, 'float32'), features_L)
 
-            features_L_val = encoder_clean_function(X_val)
-            centroids = Function_theta(np.ndarray.astype(y_targ, 'float32'),features_L)
-            
             train_err, val_err = 0, 0
             lossre_train, lossre_val = 0, 0
             num_batches_train = 0
             for batch in iterate_minibatches(X_train, y_train, batch_size, shuffle=True):
                 minibatch_inputs, targets, idx = batch
-                minibatch_error, lossrec = function_lost(minibatch_inputs,np.ndarray.astype(centroids, 'float32'), np.ndarray.astype(y_targ[idx], 'float32')) #np.asarray(y_targ_train[idx], dtype=theano.config.floatX)) #np.int32(y_targ_train[idx]),allow_input_downcast=True)
+                minibatch_error, lossrec = function_lost(minibatch_inputs, np.ndarray.astype(centroids, 'float32'),
+                                                         np.ndarray.astype(y_targ[idx],
+                                                                           'float32'))  # np.asarray(y_targ_train[idx], dtype=theano.config.floatX)) #np.int32(y_targ_train[idx]),allow_input_downcast=True)
                 train_err += minibatch_error
                 lossre_train += lossrec
                 num_batches_train += 1
-            print('Kmeans over auto-encoder:','\t nmi = {:.4f}  '.format(normalized_mutual_info_score(y, y_pred)),
-                      '\t ari = {:.4f} '.format(adjusted_rand_score(y, y_pred)),
-                      '\t acc = {:.4f} '.format(bestMap(y, y_pred)))
-            
+            print('Kmeans or AC-PIC over auto-encoder:',
+                  '\t nmi = {:.4f}  '.format(normalized_mutual_info_score(y, y_pred)),
+                  '\t arc = {:.4f} '.format(adjusted_rand_score(y, y_pred)),
+                  '\t acc = {:.4f} '.format(bestMap(y, y_pred)),
+                  '\t loss= {:.10f}'.format(train_err / num_batches_train),
+                  '\t loss_reconstruction= {:.10f}'.format(lossre_train / num_batches_train))
+
             # Z L
             features_L_val = encoder_clean_function(X_val)
-
             # Q ik
-            y_val_prob = - Function_Q_init(features_L_val,np.ndarray.astype(centroids, 'float32'))/(reg_lambda*num_clusters)
-            y_val_prob =  softmax(y_val_prob)
+            y_val_prob = - Function_Q_init(features_L_val, np.ndarray.astype(centroids, 'float32')) / (
+                        reg_lambda * num_clusters)
+            y_val_prob = softmax(y_val_prob)
             # a ik
             log_bais_val = np.sqrt(np.mean(np.ndarray.astype(y_val_prob, 'float32'), axis=0))
             # b ik
-            bais_val = np.log(log_bais_val)#
+            bais_val = np.log(log_bais_val)  #
             # p ik
-            y_val_prob = np.dot(features_L_val,np.ndarray.astype(centroids, 'float32').T)+bais_val
+            y_val_prob = np.dot(features_L_val, np.ndarray.astype(centroids, 'float32').T) + bais_val
             y_val_prob = softmax(y_val_prob)
             y_val_pred = np.argmax(y_val_prob, axis=1)
-            
+
             val_nmi = normalized_mutual_info_score(y_targ_val, y_val_pred)
 
             best_val = val_nmi
 
             print('initial val nmi: ', val_nmi)
 
-
             best_params_values = lasagne.layers.get_all_param_values([decoder])
-
-
             for epoch in range(num_epochs):
                 train_err, val_err = 0, 0
                 lossre_train, lossre_val = 0, 0
                 num_batches_train = 0
-
                 for batch in iterate_minibatches(X_train, y_train, batch_size, shuffle=True):
                     minibatch_inputs, targets, idx = batch
-                    minibatch_error, lossrec = train_soft_init(minibatch_inputs,np.ndarray.astype(centroids, 'float32'), np.ndarray.astype(y_targ_train[idx], 'float32')) #np.asarray(y_targ_train[idx], dtype=theano.config.floatX)) #np.int32(y_targ_train[idx]),allow_input_downcast=True)
+                    minibatch_error, lossrec = train_soft_init(minibatch_inputs,
+                                                               np.ndarray.astype(centroids, 'float32'),
+                                                               np.ndarray.astype(y_targ_train[idx],
+                                                                                 'float32'))  # np.asarray(y_targ_train[idx], dtype=theano.config.floatX)) #np.int32(y_targ_train[idx]),allow_input_downcast=True)
                     train_err += minibatch_error
                     lossre_train += lossrec
                     num_batches_train += 1
-                    
+
                 # Z L
                 features_L_val = encoder_clean_function(X_val)
-
                 # Z L
                 minibatch_flag = 1
-
                 for batch in iterate_minibatches(X, y, test_batch_size, shuffle=False):
                     inputs, targets, idx = batch
                     minibatch_x = encoder_clean_function(inputs)
@@ -722,37 +711,40 @@ def train_soft_k_means(dataset, X, y, input_var, decoder, encoder, loss_recons, 
                         minibatch_flag = 0
                     else:
                         features_L = np.concatenate((features_L, minibatch_x), axis=0)
-
                 # Theta K
-                centroids = Function_theta(np.ndarray.astype(y_targ, 'float32'),features_L)
+                centroids = Function_theta(np.ndarray.astype(y_targ, 'float32'), features_L)
                 # Q ik
-                y_val_prob = - Function_Q_init(features_L_val,np.ndarray.astype(centroids, 'float32'))/(reg_lambda*num_clusters)
+                y_val_prob = - Function_Q_init(features_L_val, np.ndarray.astype(centroids, 'float32')) / (
+                            reg_lambda * num_clusters)
                 y_val_prob = softmax(y_val_prob)
                 # a ik
                 log_bais_val = np.sqrt(np.mean(np.ndarray.astype(y_val_prob, 'float32'), axis=0))
                 # b ik
-                bais_val = np.log(log_bais_val)#
+                bais_val = np.log(log_bais_val)  #
                 # p ik
-                y_val_prob = np.dot(features_L_val,np.ndarray.astype(centroids, 'float32').T)+bais_val
+                y_val_prob = np.dot(features_L_val, np.ndarray.astype(centroids, 'float32').T) + bais_val
                 y_val_prob = softmax(y_val_prob)
                 y_val_pred = np.argmax(y_val_prob, axis=1)
 
                 # Q ik
-                y_prob = - Function_Q_init(features_L,np.ndarray.astype(centroids, 'float32'))/(reg_lambda*num_clusters)
+                y_prob = - Function_Q_init(features_L, np.ndarray.astype(centroids, 'float32')) / (
+                            reg_lambda * num_clusters)
                 y_prob = softmax(y_prob)
                 # a ik
                 log_bais = np.sqrt(np.mean(np.ndarray.astype(y_prob, 'float32'), axis=0))
                 # b ik
-                bais = np.log(log_bais)#
+                bais = np.log(log_bais)  #
                 # p ik
-                y_prob = np.dot(features_L,np.ndarray.astype(centroids, 'float32').T)+bais
+                y_prob = np.dot(features_L, np.ndarray.astype(centroids, 'float32').T) + bais
                 y_prob = softmax(y_prob)
                 y_pred = np.argmax(y_prob, axis=1)
                 val_nmi = normalized_mutual_info_score(y_targ_val, y_val_pred)
 
                 print('epoch:', epoch + 1, '\t nmi = {:.4f}  '.format(normalized_mutual_info_score(y, y_pred)),
-                      '\t ari = {:.4f} '.format(adjusted_rand_score(y, y_pred)),
+                      '\t arc = {:.4f} '.format(adjusted_rand_score(y, y_pred)),
                       '\t acc = {:.4f} '.format(bestMap(y, y_pred)),
+                      '\t loss= {:.10f}'.format(train_err / num_batches_train),
+                      '\t loss_reconstruction= {:.10f}'.format(lossre_train / num_batches_train),
                       '\t val nmi = {:.4f}  '.format(val_nmi))
                 last_update += 1
                 if val_nmi > best_val:
@@ -770,11 +762,8 @@ def train_soft_k_means(dataset, X, y, input_var, decoder, encoder, loss_recons, 
             with open(os.path.join(output_path, '../params/weights' + dataset + '.pickle'), "wb") as output_file:
                 pickle.dump(lasagne.layers.get_all_param_values([decoder]), output_file)
 
-
-
     # Epoch 0
     print("\n...Start Soft_K_means training")
-    clus_start = time.time()
     y_prob_prev = np.zeros((X.shape[0], num_clusters))
     lasagne.layers.set_all_param_values([decoder], best_params_values)
     # Z L
@@ -789,16 +778,16 @@ def train_soft_k_means(dataset, X, y, input_var, decoder, encoder, loss_recons, 
             features_L = np.concatenate((features_L, minibatch_x), axis=0)
 
     # Theta K
-    centroids = Function_theta(np.ndarray.astype(y_targ, 'float32'),features_L)
+    centroids = Function_theta(np.ndarray.astype(y_targ, 'float32'), features_L)
     # Q ik
-    y_prob = - Function_Q_init(features_L,np.ndarray.astype(centroids, 'float32'))/(reg_lambda*num_clusters)
+    y_prob = - Function_Q_init(features_L, np.ndarray.astype(centroids, 'float32')) / (reg_lambda * num_clusters)
     y_prob = softmax(y_prob)
     y_pred = np.argmax(y_prob, axis=1)
-    
+
     y_prob_prev = np.copy(y_prob)
 
     print('epoch: 0', '\t nmi = {:.4f}  '.format(normalized_mutual_info_score(y, y_pred)),
-          '\t ari = {:.4f} '.format(adjusted_rand_score(y, y_pred)),
+          '\t arc = {:.4f} '.format(adjusted_rand_score(y, y_pred)),
           '\t acc = {:.4f} '.format(bestMap(y, y_pred)))
     if os.path.isfile(os.path.join(output_path, '../params/rlc' + dataset + '.pickle')) & continue_training:
         with open(os.path.join(output_path, '../params/rlc' + dataset + '.pickle'),
@@ -806,8 +795,8 @@ def train_soft_k_means(dataset, X, y, input_var, decoder, encoder, loss_recons, 
             weights = pickle.load(input_file, encoding='latin1')
             lasagne.layers.set_all_param_values([decoder], weights)
     else:
-
         for epoch in range(num_epochs):
+
             # In each epoch, we do a full pass over the training data:
             train_err = 0
             lossre = 0
@@ -817,9 +806,14 @@ def train_soft_k_means(dataset, X, y, input_var, decoder, encoder, loss_recons, 
                 minibatch_inputs, targets, idx = batch
 
                 # M_step
-                if prediction_status == 'soft':
+                if prediction_status == 'hard':
+                    minibatch_err, lossrec, losspred = train_fn(minibatch_inputs,
+                                                                np.ndarray.astype(y_pred[idx], 'int32'),
+                                                                np.ndarray.astype(y_prob_max[idx],
+                                                                                  'float32'))
+                elif prediction_status == 'soft':
                     minibatch_err, lossrec = train_soft(minibatch_inputs, centroids,
-                                                                np.ndarray.astype(y_prob[idx], 'float32'))
+                                                        np.ndarray.astype(y_prob[idx], 'float32'))
 
                 train_err += minibatch_err
                 lossre += lossrec
@@ -837,32 +831,28 @@ def train_soft_k_means(dataset, X, y, input_var, decoder, encoder, loss_recons, 
                     features_L = np.concatenate((features_L, minibatch_x), axis=0)
 
             # Theta K
-            centroids = Function_theta(np.ndarray.astype(y_prob, 'float32'),features_L)
+            centroids = Function_theta(np.ndarray.astype(y_prob, 'float32'), features_L)
             # print (np.sum(np.isnan(centroids)==True))
-            
+
             # Q ik
-            y_prob = - Function_Q_init(features_L,centroids)/(reg_lambda*num_clusters)
-
+            y_prob = - Function_Q_init(features_L, centroids) / (reg_lambda * num_clusters)
             y_prob = softmax(y_prob)
-
             y_pred = np.argmax(y_prob, axis=1)
-
             if mean_squared_error(y_prob, y_prob_prev) < 1e-7:
                 break
-            
+
             y_prob_prev = np.copy(y_prob)
 
             print('epoch:', epoch + 1, '\t nmi = {:.4f}  '.format(normalized_mutual_info_score(y, y_pred)),
-                  '\t ari = {:.4f} '.format(adjusted_rand_score(y, y_pred)),
-                  '\t acc = {:.4f} '.format(bestMap(y, y_pred)))
-
-
+                  '\t arc = {:.4f} '.format(adjusted_rand_score(y, y_pred)),
+                  '\t acc = {:.4f} '.format(bestMap(y, y_pred)), '\t loss= {:.10f}'.format(train_err / num_batches),
+                  '\t loss_recons= {:.10f}'.format(lossre / num_batches))
 
     with open(os.path.join(output_path, '../params/rlc' + dataset + '.pickle'), "wb") as output_file:
         pickle.dump(lasagne.layers.get_all_param_values([decoder]), output_file)
-        
+
     with open(os.path.join(output_path, '../params/qik_final' + dataset + '.pickle'), "wb") as output_file:
-            pickle.dump(y_prob, output_file)
+        pickle.dump(y_prob, output_file)
     # Final
     # Z L
     minibatch_flag = 1
@@ -874,45 +864,37 @@ def train_soft_k_means(dataset, X, y, input_var, decoder, encoder, loss_recons, 
             minibatch_flag = 0
         else:
             features_L = np.concatenate((features_L, minibatch_x), axis=0)
-    
+
     # Theta K
-    thetaK = Function_theta(np.ndarray.astype(y_prob, 'float32'),features_L)/(reg_lambda*num_clusters)
-    
+    thetaK = Function_theta(np.ndarray.astype(y_prob, 'float32'), features_L) / (reg_lambda * num_clusters)
+
     # a ik
-    
+
     log_bais = np.sqrt(np.mean(np.ndarray.astype(y_prob, 'float32'), axis=0))
-                
+
     # b ik
-    
+
     bais = np.log(log_bais)
-    
+
     # p ik
     y_pred = np.zeros(X.shape[0])
-    y_prob = np.dot(features_L,thetaK.T)+bais
+    y_prob = np.dot(features_L, thetaK.T) + bais
     y_prob = softmax(y_prob)
     y_pred = np.argmax(y_prob, axis=1)
 
-    clus_end = time.time()
-    
-    y_pred_dataframe = pd.DataFrame(y_pred)
-    y_pred_dataframe.columns = ['cluster']
-    dfname = 'cluster_' + dataset + '.csv'
-    y_pred_dataframe.to_csv(dfname)
-
-    print('final: ',
+    print('final: ', '\t Lambda = {:.4f}  '.format(reg_lambda),
           '\t nmi = {:.4f}  '.format(normalized_mutual_info_score(y, y_pred)),
-          '\t ari = {:.4f} '.format(adjusted_rand_score(y, y_pred)),
+          '\t arc = {:.4f} '.format(adjusted_rand_score(y, y_pred)),
           '\t acc = {:.4f} '.format(bestMap(y, y_pred)))
     with open(os.path.join(output_path, '../params/finalpred' + dataset + '.pickle'), "wb") as output_file:
         pickle.dump(y_pred, output_file)
-
     with open(os.path.join(output_path, '../params/centroids_final' + dataset + '.pickle'), "wb") as output_file:
-            pickle.dump(thetaK, output_file)
-            
+        pickle.dump(thetaK, output_file)
+
     with open(os.path.join(output_path, '../params/pik_final' + dataset + '.pickle'), "wb") as output_file:
-            pickle.dump(y_prob, output_file)
-    
+        pickle.dump(y_prob, output_file)
+
     with open(os.path.join(output_path, '../params/bais_final' + dataset + '.pickle'), "wb") as output_file:
-            pickle.dump(bais, output_file)
+        pickle.dump(bais, output_file)
 
 

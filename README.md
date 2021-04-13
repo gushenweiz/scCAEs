@@ -77,6 +77,7 @@ Final: NMI= 0.7483, ARI= 0.8057, ACC= 0.8895.
 In addition, you will also get an output file named "cluster_Zeisel.csv". In the file, the first column will be the cell name, the second column will be the clustering result. 
 
 ## Plots
-We show an example on how to create a tSNE plot with the predicted cell types and true cell types. In the following two images, the first image is colored with clustering results, and the second image is colored with true labels. The R command can be found in the "tSNE_Example" folder.<br>
+We show an example on how to create two tSNE plots with the clustering result and the true cell types.The R command can be found in the "tSNE_Example" folder.<br> 
+In the following two images, the first image is colored with clustering results, and the second image is colored with true labels.<br>
 ![Zeisel_clusters](https://github.com/gushenweiz/scCAEs/blob/master/tSNE_Example/Zeisel_clusters.png)![Zeisel_truelabel](https://github.com/gushenweiz/scCAEs/blob/master/tSNE_Example/Zeisel_truelabel.png)
 

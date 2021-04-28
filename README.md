@@ -45,7 +45,7 @@ python scCAEs.py --data_type 10X --dataset PBMC
 
 Then you will get the cluster result of "PBMC" dataset using scCAEs method. The final output reports the clustering performance, here is an example on 10X PBMC scRNA-seq data:
 
-Final: NMI= 0.8810, ARI= 0.8246, ACC= 0.8763.
+Final: NMI= 0.8188, ARI= 0.8299, ACC= 0.8811.
 
 In addition, you will also get an output file named "cluster_PBMC.csv". In the file, the first column will be the cell name, the second column will be the clustering result. 
 

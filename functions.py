@@ -578,7 +578,7 @@ def train_soft_k_means(dataset, X, y, input_var, decoder, encoder, loss_recons, 
     loss_KL = loss_KL.mean() * 0.1
     prediction_t = normMatrixT2(encoder_noisy, theta_var)
     loss_clus_soft = weightedquaredloss(prediction_t, target_var).mean()
-    loss_soft = loss_recons * (reg_lambda_T) + loss3.mean() + loss_clus_soft - loss_KL
+    loss_soft = loss_recons * (reg_lambda_T * num_clusters_T) + loss3.mean() + loss_clus_soft - loss_KL
 
     params_soft = lasagne.layers.get_all_params(decoder, trainable=True)
     updates_soft = lasagne.updates.adam(loss_soft, params_soft, learning_rate=learning_rate)
@@ -600,7 +600,7 @@ def train_soft_k_means(dataset, X, y, input_var, decoder, encoder, loss_recons, 
     loss_KL_init = loss_KL_init.mean() * 0.1
     prediction_t_init = normMatrixT2(encoder_noisy, theta_init)
     loss_clus_soft_init = weightedquaredloss(prediction_t_init, target_var_init).mean()
-    loss_soft_init = loss_recons * (reg_lambda_T) + loss3.mean() + loss_clus_soft_init - loss_KL_init
+    loss_soft_init = loss_recons * (reg_lambda_T * num_clusters_T) + loss3.mean() + loss_clus_soft_init - loss_KL_init
 
     params_soft_init = lasagne.layers.get_all_params(decoder, trainable=True)
     updates_soft_init = lasagne.updates.adam(loss_soft_init, params_soft_init, learning_rate=learning_rate)

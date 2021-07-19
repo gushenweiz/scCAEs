@@ -92,8 +92,7 @@ def Selecting_highly_variable_genes(X, highly_genes):
     adata = adata[:, adata.var['highly_variable']].copy()
     # sc.pp.scale(adata, max_value=3)
     data = adata.X
-    print(data)
-    print(data.shape)
+
     return data
 
 def preprocessing(a, y, highly_genes):
@@ -658,7 +657,7 @@ def train_soft_k_means(dataset, X, y, input_var, decoder, encoder, loss_recons, 
                 num_batches_train += 1
             print('Kmeans or AC-PIC over auto-encoder:',
                   '\t nmi = {:.4f}  '.format(normalized_mutual_info_score(y, y_pred)),
-                  '\t arc = {:.4f} '.format(adjusted_rand_score(y, y_pred)),
+                  '\t ari = {:.4f} '.format(adjusted_rand_score(y, y_pred)),
                   '\t acc = {:.4f} '.format(bestMap(y, y_pred)),
                   '\t loss= {:.10f}'.format(train_err / num_batches_train),
                   '\t loss_reconstruction= {:.10f}'.format(lossre_train / num_batches_train))
@@ -741,10 +740,8 @@ def train_soft_k_means(dataset, X, y, input_var, decoder, encoder, loss_recons, 
                 val_nmi = normalized_mutual_info_score(y_targ_val, y_val_pred)
 
                 print('epoch:', epoch + 1, '\t nmi = {:.4f}  '.format(normalized_mutual_info_score(y, y_pred)),
-                      '\t arc = {:.4f} '.format(adjusted_rand_score(y, y_pred)),
+                      '\t ari = {:.4f} '.format(adjusted_rand_score(y, y_pred)),
                       '\t acc = {:.4f} '.format(bestMap(y, y_pred)),
-                      '\t loss= {:.10f}'.format(train_err / num_batches_train),
-                      '\t loss_reconstruction= {:.10f}'.format(lossre_train / num_batches_train),
                       '\t val nmi = {:.4f}  '.format(val_nmi))
                 last_update += 1
                 if val_nmi > best_val:
@@ -787,7 +784,7 @@ def train_soft_k_means(dataset, X, y, input_var, decoder, encoder, loss_recons, 
     y_prob_prev = np.copy(y_prob)
 
     print('epoch: 0', '\t nmi = {:.4f}  '.format(normalized_mutual_info_score(y, y_pred)),
-          '\t arc = {:.4f} '.format(adjusted_rand_score(y, y_pred)),
+          '\t ari = {:.4f} '.format(adjusted_rand_score(y, y_pred)),
           '\t acc = {:.4f} '.format(bestMap(y, y_pred)))
     if os.path.isfile(os.path.join(output_path, '../params/rlc' + dataset + '.pickle')) & continue_training:
         with open(os.path.join(output_path, '../params/rlc' + dataset + '.pickle'),
@@ -844,9 +841,8 @@ def train_soft_k_means(dataset, X, y, input_var, decoder, encoder, loss_recons, 
             y_prob_prev = np.copy(y_prob)
 
             print('epoch:', epoch + 1, '\t nmi = {:.4f}  '.format(normalized_mutual_info_score(y, y_pred)),
-                  '\t arc = {:.4f} '.format(adjusted_rand_score(y, y_pred)),
-                  '\t acc = {:.4f} '.format(bestMap(y, y_pred)), '\t loss= {:.10f}'.format(train_err / num_batches),
-                  '\t loss_recons= {:.10f}'.format(lossre / num_batches))
+                  '\t ari = {:.4f} '.format(adjusted_rand_score(y, y_pred)),
+                  '\t acc = {:.4f} '.format(bestMap(y, y_pred)), '\t loss= {:.10f}'.format(train_err / num_batches))
 
     with open(os.path.join(output_path, '../params/rlc' + dataset + '.pickle'), "wb") as output_file:
         pickle.dump(lasagne.layers.get_all_param_values([decoder]), output_file)
@@ -882,9 +878,15 @@ def train_soft_k_means(dataset, X, y, input_var, decoder, encoder, loss_recons, 
     y_prob = softmax(y_prob)
     y_pred = np.argmax(y_prob, axis=1)
 
+
+
+    dataframe = pd.DataFrame(y_pred)
+    data_name = "cluster_" + dataset + ".csv"
+    dataframe.to_csv(data_name)
+
     print('final: ', '\t Lambda = {:.4f}  '.format(reg_lambda),
           '\t nmi = {:.4f}  '.format(normalized_mutual_info_score(y, y_pred)),
-          '\t arc = {:.4f} '.format(adjusted_rand_score(y, y_pred)),
+          '\t ari = {:.4f} '.format(adjusted_rand_score(y, y_pred)),
           '\t acc = {:.4f} '.format(bestMap(y, y_pred)))
     with open(os.path.join(output_path, '../params/finalpred' + dataset + '.pickle'), "wb") as output_file:
         pickle.dump(y_pred, output_file)

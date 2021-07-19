@@ -35,7 +35,7 @@ pip install --editable .
 ```
 
 ## Data availability
-We provide the compressed format of all the datasets used in the paper. They are in the folder "datasets". If you want to use them, please unzip them first. 
+In the "datasets" folder, we provide the 10X data format of the PBMC dataset in the "10X" folder, so that you can quickly start scCAEs. In addition, we also provide the compressed format of all the datasets used in the paper. If you want to use them, please unzip them first. 
 
 ## Usage
 ### Quick start
@@ -53,7 +53,7 @@ In addition, you will also get an output file named "cluster_PBMC.csv". In the f
 
 ### Other Datesets
 
-If you want to run other 10X type datasets, you can put your 10X type dataset files and cell label file into "/datasets/10X". In other words, "/Datasets/10X" should contain three 10X type files: "barcodes.tsv", "genes.tsv", "matrix.mtx", and a cell label file "label.csv".
+If you want to run other 10X format datasets, you can put your 10X format dataset files and cell label file into "/datasets/10X". In other words, "/Datasets/10X" should contain three 10X format files: "barcodes.tsv", "genes.tsv", "matrix.mtx", and a cell label file "label.csv".
 
 Then you can run the following code:
 
@@ -61,13 +61,13 @@ Then you can run the following code:
 python scCAEs.py --data_type 10X --dataset PBMC
 ```
 
-If you want to run other types of datasets, you should first generate two files "data.csv" (gene count matrix, where rows represent cells and columns represent genes) and "label.csv" (true label). Then you can put your dataset folder containing the above two files ("data.csv" and "label.csv") into "datasets" and run the following code: 
+If you want to run other formats of datasets, you should first generate two files "data.csv" (gene count matrix, where rows represent cells and columns represent genes) and "label.csv" (true label). Then you can put your dataset folder containing the above two files ("data.csv" and "label.csv") into "datasets" and run the following code: 
 
 ```bash
 python scCAEs.py --dataset folder_name
 ```
 
-The fold_name represents the name of your dataset folder. We use the Zeisel (download [here](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60361)) dataset as an example. Then you can generate the gene expression matrix file "data.csv" and the cell label file "label.csv", and put them in the folder "/datasets/Zeisel". Finally you can run the following code:
+The folder_name represents the name of your dataset folder. We use the Zeisel (download [here](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60361)) dataset as an example. Then you can generate the gene expression matrix file "data.csv" and the cell label file "label.csv", and put them in the folder "/datasets/Zeisel". Finally you can run the following code:
 
 ```bash
 python scCAEs.py --dataset Zeisel
@@ -81,7 +81,8 @@ In addition, you will also get an output file named "cluster_Zeisel.csv". In the
 ## Plots
 We show an example on how to create two tSNE plots with the clustering result and the true cell types.The R command can be found in the "analysis" folder.<br> 
 In the following two images, the first image is colored with clustering results, and the second image is colored with true labels.<br>
-![Zeisel_clusters](https://github.com/gushenweiz/scCAEs/blob/master/analysis/Zeisel_clusters.png)![Zeisel_truelabel](https://github.com/gushenweiz/scCAEs/blob/master/analysis/Zeisel_truelabel.png)<br>
+![Zeisel_clusters](https://github.com/gushenweiz/scCAEs/blob/master/analysis/Zeisel_clusters.png)![Zeisel_truelabel](https://github.com/gushenweiz/scCAEs/blob/master/analysis/Zeisel_truelabel.png)
+<br>
 We also show the results of the inference of cellular trajectory using Monocle3 on the Petropoulos dataset.In the following two images, the first image shows the results of Monocle3 reconstructed trajectories using raw data as input, and the second image shows the results of Monocle3 reconstructed trajectories using low-dimensional representation from scCAEs as input.<br>
 ![raw_trajectory](https://github.com/gushenweiz/scCAEs/blob/master/analysis/raw_trajectory.png)![scCAEs_trajectory](https://github.com/gushenweiz/scCAEs/blob/master/analysis/scCAEs_trajectory.png)<br>
 

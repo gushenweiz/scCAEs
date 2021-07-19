@@ -90,7 +90,7 @@ print(
     '\n... build soft_K_means model...\nfeature_map_sizes: %s \tdropouts: %s \tkernel_sizes: %s \tstrides: %s \tpaddings: %s \tseed: %s'
     % (str(feature_map_sizes), str(dropouts), str(kernel_sizes), str(strides), str(paddings), str(seed)))
 
-##############################  Build soft_K_means Model  ##############################
+##############################  Build scCAEs Model  ##############################
 encoder, decoder, loss_recons, loss_recons_clean, loss3 = build_depict(input_var, n_in=dimensions,
                                                                 feature_map_sizes=feature_map_sizes,
                                                                 dropouts=dropouts, kernel_sizes=kernel_sizes,
@@ -100,7 +100,7 @@ encoder, decoder, loss_recons, loss_recons_clean, loss3 = build_depict(input_var
 start_de = time.time()
 
 if initialization_is_done == False:
-    ############################## Pre-train soft_K_means Model: auto-encoder initialization   ##############################
+    ############################## Pre-train scCAEs Model: auto-encoder initialization   ##############################
     print("\n...Start AutoEncoder training...")
     initial_time = timeit.default_timer()
 

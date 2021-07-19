@@ -34,7 +34,7 @@ cd Lasagne
 pip install --editable .
 ```
 
-##Data availability
+## Data availability
 We provide the compressed format of all the datasets used in the paper. They are in the folder "datasets". If you want to use them, please unzip them first. 
 
 ## Usage
@@ -81,7 +81,7 @@ In addition, you will also get an output file named "cluster_Zeisel.csv". In the
 ## Plots
 We show an example on how to create two tSNE plots with the clustering result and the true cell types.The R command can be found in the "analysis" folder.<br> 
 In the following two images, the first image is colored with clustering results, and the second image is colored with true labels.<br>
-![Zeisel_clusters](https://github.com/gushenweiz/scCAEs/tree/master/analysis/Zeisel_clusters.png)![Zeisel_truelabel](https://github.com/gushenweiz/scCAEs/tree/master/analysis/Zeisel_truelabel.png)<br>
+![Zeisel_clusters](https://github.com/gushenweiz/scCAEs/blob/master/analysis/Zeisel_clusters.png)![Zeisel_truelabel](https://github.com/gushenweiz/scCAEs/blob/master/analysis/Zeisel_truelabel.png)<br>
 We also show the results of the inference of cellular trajectory using Monocle3 on the Petropoulos dataset.In the following two images, the first image shows the results of Monocle3 reconstructed trajectories using raw data as input, and the second image shows the results of Monocle3 reconstructed trajectories using low-dimensional representation from scCAEs as input<br>
-![raw_time](https://github.com/gushenweiz/scCAEs/tree/master/analysis/raw_time.tiff)![scCAEs_time](https://github.com/gushenweiz/scCAEs/tree/master/analysis/scCAEs_time.tiff)<br>
+![raw_time](https://github.com/gushenweiz/scCAEs/blob/master/analysis/raw_time.png)![scCAEs_time](https://github.com/gushenweiz/scCAEs/blob/master/analysis/scCAEs_time.png)<br>
 

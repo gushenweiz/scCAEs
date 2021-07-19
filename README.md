@@ -83,5 +83,9 @@ We show an example on how to create two tSNE plots with the clustering result an
 In the following two images, the first image is colored with clustering results, and the second image is colored with true labels.<br>
 ![Zeisel_clusters](https://github.com/gushenweiz/scCAEs/blob/master/analysis/Zeisel_clusters.png)![Zeisel_truelabel](https://github.com/gushenweiz/scCAEs/blob/master/analysis/Zeisel_truelabel.png)<br>
 We also show the results of the inference of cellular trajectory using Monocle3 on the Petropoulos dataset.In the following two images, the first image shows the results of Monocle3 reconstructed trajectories using raw data as input, and the second image shows the results of Monocle3 reconstructed trajectories using low-dimensional representation from scCAEs as input<br>
+<<<<<<< HEAD
 ![raw_time](https://github.com/gushenweiz/scCAEs/blob/master/analysis/raw_time.png)![scCAEs_time](https://github.com/gushenweiz/scCAEs/blob/master/analysis/scCAEs_time.png)<br>
+=======
+![raw_time](https://github.com/gushenweiz/scCAEs/blob/master/analysis/raw_time.tiff)![scCAEs_time](https://github.com/gushenweiz/scCAEs/blob/master/analysis/scCAEs_time.tiff)<br>
+>>>>>>> 0bc225715222808c98cc7cfdc03020f174c7d538
 

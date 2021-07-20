@@ -35,7 +35,7 @@ pip install --editable .
 ```
 
 ## Data availability
-In the "datasets" folder, we provide the 10X data format of the PBMC dataset in the "10X" folder, so that you can quickly start scCAEs. In addition, we also provide the compressed format of all the datasets used in the paper. If you want to use them, please unzip them first. 
+In the "datasets" folder, we provide the compressed format of all the datasets used in the paper. If you want to use them, please download and unzip them first. 
 
 ## Usage
 ### Quick start

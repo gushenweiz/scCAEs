@@ -49,7 +49,7 @@ Then you will get the cluster result of "PBMC" dataset using scCAEs method. The 
 
 Final: NMI= 0.8188, ARI= 0.8299, ACC= 0.8811.
 
-In addition, you will also get an output file named "cluster_PBMC.csv". In the file, the first column will be the cell name, the second column will be the clustering result. 
+In addition, you will also get an output file named "cluster_PBMC.csv". In the file, the first column will be the cells' serial number, the second column will be the clustering result. 
 
 ### Other Datesets
 
@@ -68,7 +68,7 @@ Then you will get the cluster result of "Zeisel" dataset using scCAEs method. Th
 
 Final: NMI= 0.7483, ARI= 0.8057, ACC= 0.8895.
 
-In addition, you will also get an output file named "cluster_Zeisel.csv". In the file, the first column will be the cell name, the second column will be the clustering result. 
+In addition, you will also get an output file named "cluster_Zeisel.csv". In the file, the first column will be the cells' serial number, the second column will be the clustering result. 
 
 ## Plots
 ### Cluster

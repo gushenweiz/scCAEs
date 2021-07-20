@@ -59,7 +59,7 @@ If you want to run other datasets, you should first generate two files "data.csv
 python scCAEs.py --dataset folder_name
 ```
 
-The folder_name represents the name of your dataset folder. We use the Zeisel dataset as an example. Then you can generate the gene expression matrix file "data.csv" and the cell label file "label.csv", and put them in the folder "/datasets/Zeisel". Finally you can run the following code:
+The folder_name represents the name of your dataset folder. We use the Zeisel dataset as an example. Then you should generate the gene expression matrix file "data.csv" and the cell label file "label.csv", and put them in the folder "/datasets/Zeisel". Finally you can run the following code:
 
 ```bash
 python scCAEs.py --dataset Zeisel

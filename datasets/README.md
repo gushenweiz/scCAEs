@@ -1,0 +1,2 @@
+# Datasets
+Because the datasets are too large, what we upload is their compressed format in the “datasets” folder. The compressed file of each dataset contains two files, a gene expression matrix "data.csv" and a cell label file "label.csv". Among them, the compressed file of the dataset "Macaque" used for batch effect analysis also contains a batch effect Information file "batch.csv". If you want to use them, please download and unzip them first. 

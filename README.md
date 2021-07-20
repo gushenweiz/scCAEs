@@ -39,10 +39,10 @@ In the "datasets" folder, we provide the 10X data format of the PBMC dataset in 
 
 ## Usage
 ### Quick start
-We use the dataset 4K PBMC from a Healthy Donor (download [here](https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc4k)) to illustrate an example. You just run the following code:
+We use the dataset 4K PBMC from a Healthy Donor to illustrate an example. You should first enter the "datasets" folder and unzip the "PBMC.zip" file. Then you just need to go back to the scCAEs file directory and run the following code:
 
 ```bash
-python scCAEs.py --data_type 10X --dataset PBMC
+python scCAEs.py --dataset PBMC
 ```
 
 Then you will get the cluster result of "PBMC" dataset using scCAEs method. The final output reports the clustering performance, here is an example on 10X PBMC scRNA-seq data:
@@ -53,21 +53,13 @@ In addition, you will also get an output file named "cluster_PBMC.csv". In the f
 
 ### Other Datesets
 
-If you want to run other 10X format datasets, you can put your 10X format dataset files and cell label file into "/datasets/10X". In other words, "/Datasets/10X" should contain three 10X format files: "barcodes.tsv", "genes.tsv", "matrix.mtx", and a cell label file "label.csv".
-
-Then you can run the following code:
-
-```bash
-python scCAEs.py --data_type 10X --dataset PBMC
-```
-
-If you want to run other formats of datasets, you should first generate two files "data.csv" (gene count matrix, where rows represent cells and columns represent genes) and "label.csv" (true label). Then you can put your dataset folder containing the above two files ("data.csv" and "label.csv") into "datasets" and run the following code: 
+If you want to run other datasets, you should first generate two files "data.csv" (gene count matrix, where rows represent cells and columns represent genes) and "label.csv" (true label). Then you can put your dataset folder containing the above two files ("data.csv" and "label.csv") into "datasets" and run the following code: 
 
 ```bash
 python scCAEs.py --dataset folder_name
 ```
 
-The folder_name represents the name of your dataset folder. We use the Zeisel (download [here](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60361)) dataset as an example. Then you can generate the gene expression matrix file "data.csv" and the cell label file "label.csv", and put them in the folder "/datasets/Zeisel". Finally you can run the following code:
+The folder_name represents the name of your dataset folder. We use the Zeisel dataset as an example. Then you can generate the gene expression matrix file "data.csv" and the cell label file "label.csv", and put them in the folder "/datasets/Zeisel". Finally you can run the following code:
 
 ```bash
 python scCAEs.py --dataset Zeisel

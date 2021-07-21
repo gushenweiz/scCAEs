@@ -72,10 +72,10 @@ In addition, you will also get an output file named "cluster_Zeisel.csv". In the
 
 ## Plots
 ### Cluster
-We show an example on how to create two tSNE plots with the clustering result and the true cell types.The R command can be found in the "analysis" folder.<br> 
+We show an example on how to create two tSNE plots with the clustering result and the true cell types. The R command can be found in the "analysis" folder.<br> 
 In the following two images, the first image is colored with clustering results, and the second image is colored with true labels.<br>
 ![Zeisel_clusters](https://github.com/gushenweiz/scCAEs/blob/master/analysis/Zeisel_clusters.png)![Zeisel_truelabel](https://github.com/gushenweiz/scCAEs/blob/master/analysis/Zeisel_truelabel.png)
 ### The inference of cellular trajectory
-We also show the results of reconstructed trajectories using Monocle3 on the Petropoulos dataset.The R command can be found in the "analysis" folder. In the following two images, the first image shows the results of Monocle3 reconstructed trajectories using raw data as input, and the second image shows the results of Monocle3 reconstructed trajectories using low-dimensional representation from scCAEs as input.<br>
+We also show the results of reconstructed trajectories using Monocle3 on the Petropoulos dataset. The R command can be found in the "analysis" folder. In the following two images, the first image shows the results of Monocle3 reconstructed trajectories using raw data as input, and the second image shows the results of Monocle3 reconstructed trajectories using low-dimensional representation from scCAEs as input.<br>
 ![raw_trajectory](https://github.com/gushenweiz/scCAEs/blob/master/analysis/raw_trajectory.png)![scCAEs_trajectory](https://github.com/gushenweiz/scCAEs/blob/master/analysis/scCAEs_trajectory.png)<br>
 

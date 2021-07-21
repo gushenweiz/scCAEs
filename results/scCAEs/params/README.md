@@ -1,1 +1,1 @@
-This folder is used to store network parameters 
+This folder is used to save network parameters 
